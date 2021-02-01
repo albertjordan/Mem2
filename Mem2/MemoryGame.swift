@@ -11,14 +11,29 @@ import Foundation
 
 struct MemoryGame<CardContent> {
     
-    var cards: Array<CardContent>
+    var cards: Array<Card>    //define...
+     
+    init (numberOfPairOfCard: Int, cardFactory: (Int) -> CardContent ) {
+        cards = Array<Card>()   // create the structure...
+        for index in 0..<numberOfPairOfCard {
+            let content = cardFactory(index)
+            cards.append(Card(content: content, id: index*2))
+            cards.append(Card(content: content, id: index*2+1))
+
+        }
+        cards.shuffle()
+    }
     
-    func chose(card: CardContent){
+    func choose(card: Card){
         print("chose card: \(card)")
     }
     
     
-    var isFaceUp: Bool
-    var isMatched: Bool
-    var content:CardContent
+    struct Card: Identifiable{
+        var isFaceUp: Bool = true
+        var isMatched: Bool = false
+        var content:CardContent
+        var id: Int
+        
+    }
 }
